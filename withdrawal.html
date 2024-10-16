@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Message to Telegram</title>
+</head>
+<body>
+    <h2>Send Message to Telegram</h2>
+    <!-- Input text bar to type the message -->
+    <input type="text" id="message" placeholder="Enter your message here">
+    <!-- Button to trigger the sendMessage function -->
+    <button onclick="sendMessage()">Send Message</button>
+
+    <script>
+        // Function to send the message to Telegram
+        function sendMessage() {
+            // Get the value from the input text bar
+            var message = document.getElementById('message').value;
+
+            // Replace with your chat ID or group/channel ID
+            var chatId = '5786268361';  // Use your numeric chat ID (not the username)
+
+            // Replace with your Telegram bot token
+            var botToken = '7741281791:AAEDO6kZ74HWd9fqubMe4i8PD2kzCjcggyc';
+
+            // Construct the Telegram API URL with the bot token, chat ID, and the message
+            var url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
+
+            // Send a request to the Telegram API
+            fetch(url)
+            .then(response => response.json()) // Parse the response as JSON
+            .then(data => {
+                // If the message is sent successfully, show an alert
+                if (data.ok) {
+                    alert("Message sent successfully!");
+                } else {
+                    // If there's an error, show an error message
+                    alert("Error sending message: " + data.description);
+                }
+            })
+            .catch(error => {
+                // Handle any errors that occur during the request
+                console.error('Error:', error);
+                alert("Failed to send message.");
+            });
+        }
+    </script>
+</body>
+</html>
